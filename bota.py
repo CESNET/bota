@@ -44,7 +44,11 @@ class ProgressPercentage(object):
 
 
 def get_s3_client(host):
-    return boto3.client('s3', endpoint_url="https://" + host + "/")
+    if host.startswith('http'):
+        endpoint = host
+    else:
+        endpoint = "https://" + host + "/"
+    return boto3.client('s3', endpoint_url=endpoint)
 
 
 def mkdir_p(path):
